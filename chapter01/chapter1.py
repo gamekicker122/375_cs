@@ -1,3 +1,5 @@
+#this program says hello world
+
 print("hello world")
 def hello_you():
     name = input("What is your name")
