@@ -30,7 +30,7 @@ def main():
             re_roll(total)
 
         print() # Blank line for spacing
-        play_again = (input("Press enter to play another round or type 'N' to quit ") == '')
+        play_again = (input("Enter 'Y' to play again  ") == '')
         clear_screen()
 
 
