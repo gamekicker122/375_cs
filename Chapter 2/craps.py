@@ -17,19 +17,29 @@ import random
 
 
 def main():
+    global winnings, bet
+
     display_welcome()
+
 
     play_again = True
     while play_again:
+        bet = eval(input("What's your bet? "))
+
+
         total = roll_dice()
+
         if total == 7 or total == 11:
             print("You win!")
+            money = money + bet
         elif total == 2 or total == 3 or total == 12:
             print("You lose!")
+            money = money - bet
         else:
             re_roll(total)
 
         print() # Blank line for spacing
+        print("You now have $", money)
         play_again = (input("Enter 'Y' to play again  ") == '')
         clear_screen()
 
