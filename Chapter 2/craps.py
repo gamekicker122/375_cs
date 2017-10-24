@@ -32,7 +32,7 @@ def main():
         total = roll_dice()
 
         if total == 7 or total == 11:
-            print("You win!")
+            print("You win!!")
             money = money + bet
         elif total == 2 or total == 3 or total == 12:
             print("You lose!")
