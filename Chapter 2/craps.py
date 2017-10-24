@@ -15,16 +15,18 @@
 
 import random
 
+money = 100
+bet = 0
 
 def main():
-    global winnings, bet
+    global money, bet
 
     display_welcome()
 
 
     play_again = True
     while play_again:
-        bet = eval(input("What's your bet? "))
+        bet = place_bet()
 
 
         total = roll_dice()
@@ -57,6 +59,19 @@ def display_welcome():
     print("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$")
     print()
 
+def place_bet():
+    raw_bet = eval(input("You have $%s. What would you like to bet? ($5-$%s)  " % (money, money)))
+
+    # Here we need to validate raw_bet!
+    if raw_bet < 5:
+        print("Sorry, †he minimum is bet is $5 so thats what we'll use")
+        raw_bet = 5
+    elif raw_bet > money:
+        print("Sorry, the maximum bet is $", money, " so that's what we'll use, sep=""")
+
+    return raw_bet
+
+
 
 def roll_dice():
     input("Press Enter to roll the dice...") # We don't do anything with the input, we're just using it to pause the game
@@ -75,6 +90,8 @@ def roll_dice():
 
 
 def re_roll(point):
+    global money, bet
+
     print("You have to keep rolling until you get another", point)
     print() # Blank line for spacing
 
@@ -83,9 +100,11 @@ def re_roll(point):
         total = roll_dice()
 
     if total == point:
-        print("You win!")
+        print("You win")
+        money = money + bet
     else:
-        print("You lose!")
+        print("You lose")
+        money = money - bet
 
 
 main()
