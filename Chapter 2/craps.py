@@ -42,9 +42,14 @@ def main():
 
         print() # Blank line for spacing
         print("You now have $", money)
-        play_again = (input("Enter 'Y' to play again  ") == '')
-        clear_screen()
 
+
+
+        if money < 5:
+            print("You don't have anough money to play, better luck next time")
+            play_again = False
+        else:
+            play_again = (input("Press enter to play another round or type 'N' to quit") == "")
 
 def clear_screen():
     for i in range(20):
