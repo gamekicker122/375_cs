@@ -2,7 +2,11 @@ from graphics import *
 
 
 def main():
-    win = GraphWin("Face Drawing", 400, 400)
+
+    size = eval(input("How big do you want to make the window? "))
+
+    win = GraphWin("Face Drawing", size, size)
+    win.setCoords(400,400, 0, 0)
 
     # Here's where I will draw the face!
     center = Point (195 , 172)
@@ -10,26 +14,21 @@ def main():
     circ.setFill('orange')
     circ.draw(win)
 
-
-
     center = Point (100, 95)
     circ = Circle(center, 30)
-    circ.setFill('cyan')
+    circ.setFill(color_rgb(30, 243, 129))
     circ.draw(win)
-
 
     center = Point (100, 95)
     circ = Circle(center, 15)
     circ.setFill('black')
     circ.draw(win)
 
-
     # this is the right eye
     center = Point (300, 95)
     circ = Circle(center, 30)
-    circ.setFill('cyan')
+    circ.setFill(color_rgb(240, 115, 249))
     circ.draw(win)
-
 
     center = Point (300, 95)
     circ = Circle(center, 15)
@@ -40,16 +39,13 @@ def main():
     rectangle.draw(win)
     rectangle.setFill('cyan')
 
-
     line = Line (Point(255,300) , Point(155 , 300))
     line.draw(win)
     line.setFill('cyan')
 
-
     line = Line (Point(50,245) , Point(155,300))
     line.draw(win)
     line.setFill('cyan')
-
 
     line = Line (Point(350,245) , Point(255,300))
     line.draw(win)
