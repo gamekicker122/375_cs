@@ -4,11 +4,17 @@
 #
 # by Mr. Ciccolo
 
+
+
+
 from graphics import *
 from random import *
+from math import *
 
 def main():
     print("Press the arrow keys to move the white circle, press 'q' to quit")
+
+    score=0
 
     window_size = 600
     canvas_size = 20
@@ -16,6 +22,12 @@ def main():
     win = GraphWin("Animation Example with Keyboard", window_size, window_size)
     win.setCoords(0, 0, canvas_size, canvas_size)
     win.setBackground("black")
+
+
+    score_text = Text(Point(2,18),"Score:0")
+    score.setTextColor("White")
+    score_text.draw(win)
+
 
     circle = Circle(Point(canvas_size / 2, canvas_size / 2), 2)
     circle.setFill("white")
@@ -25,8 +37,6 @@ def main():
     pellet.setFill("yellow")
     pellet.draw(win)
     move_to_random_point(pellet,canvas_size)
-
-
 
     while True:
         key = win.getKey()
@@ -48,13 +58,21 @@ def main():
         circle.move(delta_x, delta_y)
 
         if collide(circle,pellet):
-            move_to_random_point(pellet, not canvas_size)
+            move_to_random_point(pellet,  canvas_size)
+            score +=1
+            print("Score", score)
 
+
+def collide(c1,c2):
+    a = c1.getCenter().getX() - c2.getCenter().getX()
+    b = c1.getCenter().getY() - c2.getCenter().getY()
+    c = sqrt (a**2 + b**2)
+    return c<= (c1.getRadius() +c2.getRadius())
 
 
 def move_to_random_point(circle,bounds):
-    next_x= randrange(0,bounds+1)
-    next_y= randrange(0,bounds+1)
+    next_x= randrange(circle.getRadius(),bounds+1 - circle.getRadius())
+    next_y= randrange(circle.getRadius(),bounds+1 - circle.getRadius())
 
     current_x = circle.getCenter().getX()
     current_y = circle.getCenter().getY()
@@ -63,7 +81,5 @@ def move_to_random_point(circle,bounds):
     delta_y=next_y - current_y
 
     circle.move(delta_x,delta_y)
-
-def collide(c1,c2):
 
 main()
