@@ -15,6 +15,8 @@ def main():
     print("Press the arrow keys to move the white circle, press 'q' to quit")
 
     score=0
+    timer=60
+
 
     window_size = 600
     canvas_size = 20
@@ -25,9 +27,17 @@ def main():
 
 
     score_text = Text(Point(2,18),"Score:0")
-    score.setTextColor("White")
+    score_text.setTextColor("white")
+    score_text.setFace("courier")
+    score_text.setSize(24)
     score_text.draw(win)
 
+
+    time_text = Text(Point(15,18),"Timer:60")
+    time_text.setTextColor("white")
+    time_text.setFace("courier")
+    time_text.setSize(24)
+    time_text.draw(win)
 
     circle = Circle(Point(canvas_size / 2, canvas_size / 2), 2)
     circle.setFill("white")
@@ -38,8 +48,20 @@ def main():
     pellet.draw(win)
     move_to_random_point(pellet,canvas_size)
 
-    while True:
-        key = win.getKey()
+    time_check=time.time()
+
+    message_text = Text(Point(canvas_size/2, canvas_size/2), "CLICK TO START")
+    message_text.setFill("green")
+    message_text.setFace("courier")
+    message_text.setSize(35)
+    message_text.draw(win)
+    win.getMouse()
+    message_text.setText("")
+
+
+
+    while timer > 0:
+        key = win.checkKey()
 
         delta_x = 0
         delta_y = 0
@@ -60,7 +82,14 @@ def main():
         if collide(circle,pellet):
             move_to_random_point(pellet,  canvas_size)
             score +=1
-            print("Score", score)
+            score_text.setText("score:"+str(score))
+
+        if time.time() - time_check > 1:
+            timer -=1
+            print(timer)
+            time_check = time.time()
+            time_text.setText("Timer:"+str(timer))
+
 
 
 def collide(c1,c2):
