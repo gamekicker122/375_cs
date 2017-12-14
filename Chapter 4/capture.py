@@ -16,7 +16,10 @@ def main():
 
     score=0
     timer=60
-
+    power_pellet=5
+    power_time_check=5
+    power_time_pellet=0
+    power_timer=5
 
     window_size = 600
     canvas_size = 20
@@ -48,7 +51,10 @@ def main():
     pellet.draw(win)
     move_to_random_point(pellet,canvas_size)
 
-    time_check=time.time()
+    power_pellet = Circle(Point(0,0),1)
+    power_pellet.setFill("green")
+    power_pellet.draw(win)
+    move_to_random_point(power_pellet,canvas_size)
 
     message_text = Text(Point(canvas_size/2, canvas_size/2), "CLICK TO START")
     message_text.setFill("green")
@@ -58,7 +64,7 @@ def main():
     win.getMouse()
     message_text.setText("")
 
-
+    time_check=time.time()
 
     while timer > 0:
         key = win.checkKey()
@@ -84,12 +90,21 @@ def main():
             score +=1
             score_text.setText("score:"+str(score))
 
+        if collide(circle,power_pellet):
+            move_to_random_point(power_pellet,  canvas_size)
+            score +=5
+            score_text.setText("score:"+str(score))
+
         if time.time() - time_check > 1:
             timer -=1
             print(timer)
             time_check = time.time()
             time_text.setText("Timer:"+str(timer))
 
+        if power_time_check() - time_check > 2:
+            power_timer-=1
+            print("Timer 5 seconds")
+            power_time_check = time.time()
 
 
 def collide(c1,c2):
