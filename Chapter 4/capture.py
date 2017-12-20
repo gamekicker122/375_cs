@@ -17,7 +17,10 @@ def main():
     score = 0
     timer = 60
     power_pellet = 5
-    double_points = 5
+    power_pellet_visible = False
+
+
+
 
     window_size = 600
     canvas_size = 20
@@ -61,9 +64,6 @@ def main():
     power_pellet.draw(win)
 
 
-    double_points
-    hidden = true
-
 
 
 
@@ -101,10 +101,23 @@ def main():
         if collide(ball, power_pellet):
             score += 5
             score_text.setText("Score: " + str(score))
-            move_to_random_point(power_pellet, canvas_size)
+            move_off_screen(power_pellet)
 
-        if timer % 5 ==0:
-           move_to_random_point(power_pellet, canvas_size)
+
+
+        if not power_pellet_visible:
+            if randrange(1,250)==1:
+                move_to_random_point(power_pellet, canvas_size)
+                power_pellet_visible = True
+
+        else:
+            if randrange(1,250)==1:
+                move_off_screen(power_pellet)
+                power_pellet_visible = False
+
+
+
+
 
 
 
@@ -123,6 +136,19 @@ def collide(c1, c2):
     collision = distance <= (c1.getRadius() + c2.getRadius())
 
     return collision
+
+
+def move_off_screen(circle):
+    current_x = circle.getCenter().getX()
+    current_y = circle.getCenter().getY()
+
+    next_x = -10
+    next_y = -10
+
+    delta_x = next_x - current_x
+    delta_y = next_y - current_y
+
+    circle.move(delta_x, delta_y)
 
 
 def move_to_random_point(circle, bounds):
