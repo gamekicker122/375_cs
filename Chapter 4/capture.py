@@ -1,10 +1,8 @@
 # capture_the_pellets.py
 #
-# This program is a simple game called "Capture the Pellets!". The user moves a large white ball around the screen
-# using the arrow keys to "capture" a small, randomly-placed, yellow pellet. The program keeps track of the score and a
-# countdown timer. The goal is to capture as many pellets as possible before time expires.
-#
-# by Mr. Ciccolo
+# In this program you chase a pellet and everytime 8 seconds or so a power pellet will appear for a few seconds allowing
+#you to get a +5 points.I changed the text colors,backrounds and the color of the pellets, I also added a text
+#in the backround that says Capture the pellets! which switches to GAMEOVER when the timer runs out.
 
 from graphics import *
 from math import *
@@ -20,29 +18,27 @@ def main():
     power_pellet_visible = False
 
 
-
-
     window_size = 600
     canvas_size = 20
 
     win = GraphWin("Capture the Pellets!", window_size, window_size)
     win.setCoords(0, 0, canvas_size, canvas_size)
-    win.setBackground("black")
+    win.setBackground("green")
 
     score_text = Text(Point(0.2 * canvas_size, 0.9 * canvas_size), "Score: " + str(score))
-    score_text.setTextColor("white")
+    score_text.setTextColor("blue")
     score_text.setFace("courier")
     score_text.setSize(24)
     score_text.draw(win)
 
-    timer_text = Text(Point(0.8 * canvas_size, 0.9 * canvas_size), "Time: " + str(timer))
-    timer_text.setTextColor("white")
+    timer_text = Text(Point(0.7 * canvas_size, 0.9 * canvas_size), "Time: " + str(timer))
+    timer_text.setTextColor("blue")
     timer_text.setFace("courier")
     timer_text.setSize(24)
     timer_text.draw(win)
 
     message_text = Text(Point(canvas_size / 2, canvas_size / 2), "CLICK TO START")
-    message_text.setTextColor("green")
+    message_text.setTextColor("black")
     message_text.setFace("courier")
     message_text.setSize(36)
     message_text.draw(win)
@@ -50,8 +46,15 @@ def main():
     win.getMouse()
     message_text.setText("")
 
+#I added capture the pellets! to the backround and then when the game is over it switches to GAME OVER
+
+    message_text = Text(Point(canvas_size/ 2, canvas_size / 2), "Capture the Pellets!")
+    message_text.setTextColor("black")
+    message_text.setFace("courier")
+    message_text.setSize(36)
+    message_text.draw(win)
     ball = Circle(Point(canvas_size / 2, canvas_size / 2), 2)
-    ball.setFill("white")
+    ball.setFill("purple")
     ball.draw(win)
 
     pellet = Circle(Point(0, 0), 1)
@@ -60,10 +63,8 @@ def main():
     move_to_random_point(pellet, canvas_size)
 
     power_pellet = Circle(Point(-10,-10),1)
-    power_pellet.setFill("green")
+    power_pellet.setFill("blue")
     power_pellet.draw(win)
-
-
 
 
 
@@ -105,23 +106,24 @@ def main():
 
 
 
+
         if not power_pellet_visible:
-            if randrange(1,250)==1:
+            if randrange(1,300)==1:
                 move_to_random_point(power_pellet, canvas_size)
                 power_pellet_visible = True
 
         else:
-            if randrange(1,250)==1:
+            if randrange(1,300)==1:
                 move_off_screen(power_pellet)
                 power_pellet_visible = False
 
+        if timer == 59:
+            message_text.setText("")
 
 
 
 
-
-
-    message_text.setTextColor("red")
+    message_text.setTextColor("black")
     message_text.setText("GAME OVER")
 
     input("Game over! Your final score was " + str(score) + ". Press Enter to quit.")
@@ -162,6 +164,8 @@ def move_to_random_point(circle, bounds):
     delta_y = next_y - current_y
 
     circle.move(delta_x, delta_y)
+
+
 
 
 
